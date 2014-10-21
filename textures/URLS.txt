@@ -1,0 +1,16 @@
+http://planetpixelemporium.com/download/download.php?sunmap.jpg
+http://planetpixelemporium.com/download/download.php?mercurymap.jpg
+http://planetpixelemporium.com/download/download.php?venusmap.jpg
+http://planetpixelemporium.com/download/download.php?earthmap1k.jpg
+http://planetpixelemporium.com/download/download.php?moonmap1k.jpg
+http://planetpixelemporium.com/download/download.php?marsmap1k.jpg
+http://planetpixelemporium.com/download/download.php?jupitermap.jpg
+http://planetpixelemporium.com/download/download.php?saturnmap.jpg
+http://planetpixelemporium.com/download/download.php?saturnringcolor.jpg <!-- rotated 90 to left -->
+http://planetpixelemporium.com/download/download.php?saturnringpattern.gif <!-- rotated 90 to left -->
+http://planetpixelemporium.com/download/download.php?uranusmap.jpg
+http://planetpixelemporium.com/download/download.php?uranusringcolour.jpg <!-- rotated 90 to left -->
+http://planetpixelemporium.com/download/download.php?uranusringtrans.gif <!-- rotated 90 to left -->
+http://planetpixelemporium.com/download/download.php?neptunemap.jpg
+http://planetpixelemporium.com/download/download.php?plutomap1k.jpg
+http://www.eso.org/public/archives/images/screen/eso0932a.jpg
