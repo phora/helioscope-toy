@@ -4,7 +4,7 @@
 #include <ctime>
 #include <gtc/matrix_transform.hpp>
 
-#include <swephexp.h>
+#include <swisseph/swephexp.h>
 #include "sphere.h"
 
 namespace PLUGraphicsLib {

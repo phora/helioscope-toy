@@ -2,7 +2,7 @@
 #define OPENGLCONTROLLER_H_
 
 #include "gl_compat_3_2.h"
-#include <swephexp.h>
+#include <swisseph/swephexp.h>
 #ifdef HAS_FTGL
 #include <FTGL/ftgl.h>
 #endif

@@ -11,7 +11,7 @@ endif
 
 INCLUDES = -I$(GLFW_DIR)/include -I$(GLM_DIR) -I$(SWISS_DIR)/include -I$(FTGL_DIR)/include -I$(FT_DIR)/include/freetype2 -I$(FT_DIR)/include
 CFLAGS = -g -O2 -Wno-pointer-sign -Wno-deprecated-declarations
-CXXFLAGS =	$(INCLUDES) -O2 -g -Wall -fmessage-length=0
+CXXFLAGS = $(INCLUDES) -O2 -g -Wall -fmessage-length=0
 ifneq ($(strip $(HAS_FTGL)),)
 CXXFLAGS+=-DHAS_FTGL=1
 endif
