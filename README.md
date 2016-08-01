@@ -11,7 +11,7 @@ to open another font file for displaying the text.
 * Escape: Quit the program
 * Spacebar: pause
 * A: Toggle the display of Earth's moon
-* 0/1/2/3/4/5/6/7/8 + Left/Right: Adjust the datetime by the planet's planetary orbit. Here's the value table
+* 0/1/2/3/4/5/6/7/8 + KP_ADD|KP_SUBTRACT: Adjust the datetime by the planet's planetary orbit. Here's the value table
 
 KEY|Planet      |Date increment
 ---|------------|--------------
