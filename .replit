@@ -1,0 +1,4 @@
+run = "./helioscope-toy"
+
+[nix]
+channel = "stable-21_11"
