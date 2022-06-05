@@ -2,3 +2,6 @@
 *.xcf
 helioscope-toy
 writeup.odt
+deps/lib/*.so
+deps/include/*.h
+deps/include/*/*.h
