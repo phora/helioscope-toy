@@ -1,0 +1,6 @@
+[submodule "3rd-party/swisseph"]
+	path = 3rd-party/swisseph
+	url = https://github.com/aloistr/swisseph
+[submodule "3rd-party/gltw"]
+	path = 3rd-party/gltw
+	url = https://github.com/daw42/gltw
