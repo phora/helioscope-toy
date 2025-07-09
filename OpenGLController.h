@@ -69,6 +69,11 @@ public:
 
 	void keyEvent(GLFWwindow *, int, int, int);
 	void update( GLFWwindow *, float ntime );
+	#ifdef HAS_FTGL
+	void setupCameras(int, int, int);
+	#else
+	void setupCameras(int, int);
+	#endif
 
 private:
 	ShaderProgram program;
@@ -89,6 +94,11 @@ private:
 	#endif
 	glm::mat4 stars;
 	std::vector<Planet> planetarium;
+	int canvas_width;
+	int canvas_height;
+	#ifdef HAS_FTGL
+	int toolbar_height;
+	#endif
 
 	GLuint tex[14];
 

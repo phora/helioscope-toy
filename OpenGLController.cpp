@@ -16,19 +16,7 @@ OpenGLController::OpenGLController() : program(),
 		sphere(.1f,30,30),
 		aroundSun(true), pause(false), doMoon(false),
 		//c(glm::vec3(0,0,50), glm::vec3(0,0,0), glm::vec3(0,1,0),
-		#ifdef HAS_FTGL
-		c(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0),
-			45.f, 640.0f/432.0f,1.f, 1000.0f),
-		#else
-		c(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0),
-			45.f, 640.0f/480.0f,1.f, 1000.0f),
-		#endif
 		curtime(2456414.433750) //this is equivalent to  5/01/2013 CE 22:24:35 UTC
-		#ifdef HAS_FTGL
-		,
-		tc(glm::vec3(0,0,100), glm::vec3(0,0,0), glm::vec3(0,1,0),
-			45.f, 640.0f/48.0f, 1.0f, 1000.0f)
-		#endif
 		{
 			#ifdef HAS_FTGL
 			f = new FTPolygonFont("DejaVuSansMono.ttf");
@@ -38,6 +26,32 @@ OpenGLController::OpenGLController() : program(),
 			#endif
 			stars = glm::mat4(1.0f);
 		}
+
+#ifdef HAS_FTGL
+void OpenGLController::setupCameras(int c_w, int c_h, int tb_h) {
+	// update private variables for GPU rendering
+	canvas_width = c_w;
+	canvas_height = c_h;
+	toolbar_height = tb_h;
+	float aspect_ratio = ((float)canvas_width) / ((float)canvas_height - (float)toolbar_height);
+	float tb_aspect_ratio = ((float)canvas_width) / ((float)toolbar_height);
+	// TODO: don't clobber our camera position on resize
+	tc = Camera(glm::vec3(0,0,100), glm::vec3(0,0,0), glm::vec3(0,1,0), 45.f, tb_aspect_ratio, 1.f, 1000.f);
+	c = Camera(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0), 45.f, aspect_ratio, 1.f, 1000.f);
+	f->FaceSize(toolbar_height);
+}
+#else
+void OpenGLController::setupCameras(int c_w, int c_h, int tb_h) {
+	// update private variables for GPU rendering
+	canvas_width = c_w;
+	canvas_height = c_h;
+	float aspect_ratio = ((float)canvas_width) / ((float)canvas_height);
+
+	// TODO: don't clobber our camera position on resize
+	// recalculate base camera matrix
+	c = Camera(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0), 45.f, aspect_ratio, 1.f, 1000.f);
+}
+#endif
 
 void OpenGLController::keyEvent(GLFWwindow * window, int key, int scancode, int state, int mods) {
 
@@ -361,9 +375,9 @@ void OpenGLController::draw() {
 	program.setUniform("Ka", vec3(1,1,1));
 	program.setUniform("ambientLightIntensity", vec3(1,1,1));
 
-	glViewport(0,0,640,48);
+	glViewport(0, 0, canvas_height,toolbar_height);
 	glm::mat4 m(1.0f);
-	m = glm::translate(m,vec3(-544,0,0));
+	m = glm::translate(m,vec3(2 * toolbar_height - canvas_height,0,0));
 
 	char buff[28], indicator;
 	if (aroundSun) {
@@ -395,7 +409,7 @@ void OpenGLController::draw() {
 #endif
 //text code
 	#ifdef HAS_FTGL
-	glViewport(0,48,640,432);
+	glViewport(0, toolbar_height, canvas_width, canvas_height);
 	#endif
 	program.setUniform("projection",c.getProjectionMatrix());
 	program.setUniform("view",c.getViewMatrix());

@@ -37,6 +37,10 @@ void mainLoop(OpenGLController & controller, GLFWwindow * window)
 
 int main( void )
 {
+	// TODO: Take size from CLI
+	int WINDOW_WIDTH = 640;
+	int WINDOW_HEIGHT = 480;
+	int TB_HEIGHT = 48;
 	// Initialize GLFW
 	if( !glfwInit() ) exit( EXIT_FAILURE );
 	//glfwEnable(GLFW_STICKY_KEYS); //key combo?
@@ -59,7 +63,7 @@ int main( void )
 
 	// Open the window
 	//window = glfwCreateWindow(640, 480, 8,8,8, 0, 24, 0, GLFW_WINDOW );
-	window = glfwCreateWindow(640, 480, "Heliocentric Scope Toy", NULL, NULL );
+	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Heliocentric Scope Toy", NULL, NULL );
 	if( !window ) {
 		glfwTerminate();
 		exit( EXIT_FAILURE );
@@ -72,11 +76,18 @@ int main( void )
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
-	glViewport(0, 0, 640, 480);
+
+	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	glfwSetKeyCallback(window, keyEvent);
 
 	controller.init();
+
+	#ifdef HAS_FTGL
+	controller.setupCameras(WINDOW_WIDTH, WINDOW_HEIGHT, TB_HEIGHT);
+	#else
+	controller.setupCameras(WINDOW_WIDTH, WINDOW_HEIGHT);
+	#endif
 
 	// Enter the main loop
 	mainLoop(controller, window);
