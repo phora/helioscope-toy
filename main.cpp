@@ -10,10 +10,11 @@
 //#include "config.h"
 #include "OpenGLController.h"
 
-OpenGLController controller;
+
 
 void keyEvent(GLFWwindow * window, int key, int scancode, int state, int mods ) {
-	controller.keyEvent(window, key, scancode, state, mods);
+	OpenGLController *controller = (OpenGLController *)glfwGetWindowUserPointer(window);
+	(*controller).keyEvent(window, key, scancode, state, mods);
 }
 
 void mainLoop(OpenGLController & controller, GLFWwindow * window)
@@ -38,6 +39,7 @@ void mainLoop(OpenGLController & controller, GLFWwindow * window)
 int main( void )
 {
 	// TODO: Take size from CLI
+	OpenGLController controller;
 	int WINDOW_WIDTH = 640;
 	int WINDOW_HEIGHT = 480;
 	int TB_HEIGHT = 48;
@@ -79,6 +81,7 @@ int main( void )
 
 	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+	glfwSetWindowUserPointer(window, (void *)&controller);
 	glfwSetKeyCallback(window, keyEvent);
 
 	controller.init();
