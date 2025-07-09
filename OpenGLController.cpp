@@ -36,6 +36,7 @@ OpenGLController::OpenGLController() : program(),
 			f->FaceSize(48);
 			f->UseDisplayList(false);
 			#endif
+			stars = glm::mat4(1.0f);
 		}
 
 void OpenGLController::keyEvent(GLFWwindow * window, int key, int state, int mods) {
