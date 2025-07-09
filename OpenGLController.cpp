@@ -362,7 +362,7 @@ void OpenGLController::draw() {
 	program.setUniform("ambientLightIntensity", vec3(1,1,1));
 
 	glViewport(0,0,640,48);
-	glm::mat4 m;
+	glm::mat4 m(1.0f);
 	m = glm::translate(m,vec3(-544,0,0));
 
 	char buff[28], indicator;
