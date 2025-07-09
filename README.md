@@ -1,7 +1,7 @@
 # Compiling
 * To use FTGL, set the environment HAS_FTGL to something that isn't blank. You may also edit the source code
 to open another font file for displaying the text.
-* Requires GLFW2, GLTW, swisseph, and GLM
+* Requires GLFW3, GLTW, swisseph, and GLM
 
 # Controls
 * Shift+Up/Down: Scoot the camera 1 AU closer/farther

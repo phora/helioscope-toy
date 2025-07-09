@@ -2,7 +2,6 @@
 
 #include "bmpreader.h"
 
-#include <GL/glfw.h>
 #include <cstdlib>
 #include <glm.hpp>
 #include <gtc/matrix_transform.hpp>
@@ -39,11 +38,32 @@ OpenGLController::OpenGLController() : program(),
 			#endif
 		}
 
-void OpenGLController::keyEvent(int key, int state) {
+void OpenGLController::keyEvent(GLFWwindow * window, int key, int state, int mods) {
+
 	if (state == GLFW_PRESS) {
 		//key combos in glfw are read right to left!
 			switch (key) {
-				case GLFW_KEY_ESC:
+				case GLFW_KEY_RIGHT:
+					pn.x = 1;
+					break;
+				case GLFW_KEY_LEFT:
+					pn.x = -1;
+					break;
+				case GLFW_KEY_UP:
+					if (mods == GLFW_MOD_SHIFT) {
+						pn.z=-1;
+					} else {
+						pn.y=1;
+					}
+					break;
+				case GLFW_KEY_DOWN:
+					if (mods == GLFW_MOD_SHIFT) {
+						pn.z=1;
+					} else {
+						pn.y=-1;
+					}
+					break;
+				case GLFW_KEY_ESCAPE:
 					exit(0);
 				case GLFW_KEY_SPACE:
 					aroundSun=!aroundSun;
@@ -55,39 +75,39 @@ void OpenGLController::keyEvent(int key, int state) {
 					doMoon=!doMoon;
 					break;
 				case GLFW_KEY_KP_ADD:
-					if (glfwGetKey(GLFW_KEY_KP_0) == GLFW_PRESS) {
+					if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS) {
 						printf("Mercury!\n");
 						curtime+=87.969;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_1) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS) {
 						printf("Venus!\n");
 						curtime+=224.698;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_2) == GLFW_PRESS) { //reprogram this if geocentric
+					else if (glfwGetKey(window, GLFW_KEY_KP_2) == GLFW_PRESS) { //reprogram this if geocentric
 						printf("Earth!\n");
 						curtime+=365.256363051;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_3) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_3) == GLFW_PRESS) {
 						printf("Mars!\n");
 						curtime+=686.971;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_4) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_4) == GLFW_PRESS) {
 						printf("Jupiter!\n");
 						curtime+=4332.59;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_5) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_5) == GLFW_PRESS) {
 						printf("Saturn!\n");
 						curtime+=10759.22;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_6) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_6) == GLFW_PRESS) {
 						printf("Uranus!\n");
 						curtime+=30799.095;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_7) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_7) == GLFW_PRESS) {
 						printf("Neptune!\n");
 						curtime+=60190.03;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_8) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_8) == GLFW_PRESS) {
 						printf("Pluto!\n");
 						curtime+=89865.65;
 					}
@@ -97,39 +117,39 @@ void OpenGLController::keyEvent(int key, int state) {
 					}
 					break;
 				case GLFW_KEY_KP_SUBTRACT:
-					if (glfwGetKey(GLFW_KEY_KP_0) == GLFW_PRESS) {
+					if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS) {
 						printf("Mercury!\n");
 						curtime-=87.969;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_1) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS) {
 						printf("Venus!\n");
 						curtime-=224.698;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_2) == GLFW_PRESS) { //reprogram this if geocentric
+					else if (glfwGetKey(window, GLFW_KEY_KP_2) == GLFW_PRESS) { //reprogram this if geocentric
 						printf("Earth!\n");
 						curtime-=365.256363051;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_3) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_3) == GLFW_PRESS) {
 						printf("Mars!\n");
 						curtime-=686.971;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_4) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_4) == GLFW_PRESS) {
 						printf("Jupiter!\n");
 						curtime-=4332.59;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_5) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_5) == GLFW_PRESS) {
 						printf("Saturn!\n");
 						curtime-=10759.22;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_6) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_6) == GLFW_PRESS) {
 						printf("Uranus!\n");
 						curtime-=30799.095;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_7) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_7) == GLFW_PRESS) {
 						printf("Neptune!\n");
 						curtime-=60190.03;
 					}
-					else if (glfwGetKey(GLFW_KEY_KP_8) == GLFW_PRESS) {
+					else if (glfwGetKey(window, GLFW_KEY_KP_8) == GLFW_PRESS) {
 						printf("Pluto!\n");
 						curtime-=89865.65;
 					}
@@ -143,38 +163,12 @@ void OpenGLController::keyEvent(int key, int state) {
 
 }
 
-void OpenGLController::update( float ntime ) {
+void OpenGLController::update(GLFWwindow *window,  float ntime ) {
 	float deltaT;
 	if(tPrev == 0.0f) deltaT = 0.0f;
 	else deltaT = ntime - tPrev;
 
 	//smooth pan the camera
-	
-	if( glfwGetKey(GLFW_KEY_RIGHT) == GLFW_PRESS) {
-			pn.x=1;
-		}
-		else if (glfwGetKey(GLFW_KEY_LEFT) == GLFW_PRESS) {
-			pn.x=-1;
-		}
-
-		if (glfwGetKey(GLFW_KEY_UP) == GLFW_PRESS) {
-			if (glfwGetKey(GLFW_KEY_LSHIFT) == GLFW_PRESS || glfwGetKey(GLFW_KEY_RSHIFT)  == GLFW_PRESS)
-			{
-				pn.z=-1;
-			}
-			else {
-				pn.y=1;
-			}
-		}
-		else if (glfwGetKey(GLFW_KEY_DOWN) == GLFW_PRESS) {
-			if (glfwGetKey(GLFW_KEY_LSHIFT) == GLFW_PRESS || glfwGetKey(GLFW_KEY_RSHIFT)  == GLFW_PRESS)
-			{
-				pn.z=1;
-			}
-			else {
-				pn.y=-1;
-			}
-		}
 	
 	float angle = /*rotationSpeed*/3 * deltaT;
 	//printf("Panning by %.6f,%.6f,%.6f\n",deltaT*pn.x,deltaT*pn.y,deltaT*pn.z);

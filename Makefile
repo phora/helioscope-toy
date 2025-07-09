@@ -11,6 +11,19 @@ ifneq ($(strip $(REPL_ID)),)
   SWISS_DIR = deps
 endif
 
+ifneq ($(strip $(MSYSTEM_PREFIX)),)
+  GL_LIB_DIR = $(MSYSTEM_PREFIX)
+  GL_DEV_DIR = $(MSYSTEM_PREFIX)
+  GLU_LIB_DIR = $(MSYSTEM_PREFIX)
+  GLU_DEV_DIR = $(MSYSTEM_PREFIX)
+  GLFW_DIR = $(MSYSTEM_PREFIX)
+  GLTW_DIR = 3rd-party/gltw
+  GLM_DIR = $(MSYSTEM_PREFIX)/include/glm
+  FTGL_DIR = $(MSYSTEM_PREFIX)
+  FT_DIR = $(MSYSTEM_PREFIX)
+  SWISS_DIR = deps
+endif
+
 # The directory containing the GLFW includes and libraries
 GLFW_DIR ?= /usr
 SWISS_DIR ?= /usr
@@ -39,15 +52,19 @@ LIBS_COMMON = -lswe -L$(SWISS_DIR)/lib
 ifneq ($(strip $(HAS_FTGL)),)
 LIBS_COMMON += -lfreetype -L$(FT_DIR)/lib -lftgl -L$(FTGL_DIR)/lib
 endif
-LIBS_APPLE = -L$(GLFW_DIR)/lib -lglfw -framework Cocoa -framework OpenGL -framework IOKit
-LIBS_WIN =   -L$(GLFW_DIR)/lib -lglfw -lopengl32
-LIBS_LINUX = -L$(GLFW_DIR)/lib -pthread -lGL -lglfw2 -lrt
-LIBS_REPLIT = -L$(GLFW_DIR)/lib -L$(GL_LIB_DIR)/lib -L$(GLU_LIB_DIR)/lib -pthread -lGL -lglfw -lrt
+LIBS_APPLE = -L$(GLFW_DIR)/lib -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit
+LIBS_WIN =   -L$(GLFW_DIR)/lib -lglfw3 -lglu32 -lopengl32
+LIBS_LINUX = -L$(GLFW_DIR)/lib -pthread -lGL -lglfw3 -lrt
+LIBS_REPLIT = -L$(GLFW_DIR)/lib -L$(GL_LIB_DIR)/lib -L$(GLU_LIB_DIR)/lib -pthread -lGL -lglfw3 -lrt
 
 ifneq ($(strip $(REPL_ID)),)
   LIBS =       $(LIBS_REPLIT) $(LIBS_COMMON) 
 else
-  LIBS =       $(LIBS_LINUX) $(LIBS_COMMON) 
+  ifeq ($(OS),Windows_NT)
+    LIBS =       $(LIBS_WIN) $(LIBS_COMMON)
+  else
+    LIBS =       $(LIBS_LINUX) $(LIBS_COMMON)
+  endif
 endif
 
 # The name of the output executable

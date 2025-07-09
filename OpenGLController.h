@@ -6,6 +6,7 @@
 #ifdef HAS_FTGL
 #include <FTGL/ftgl.h>
 #endif
+#include <GLFW/glfw3.h>
 
 //#include <ctime>
 #include <cstdlib>
@@ -66,8 +67,8 @@ public:
 	 */
 	void draw();
 
-	void keyEvent(int, int);
-	void update( float ntime );
+	void keyEvent(GLFWwindow *, int, int, int);
+	void update( GLFWwindow *, float ntime );
 
 private:
 	ShaderProgram program;
