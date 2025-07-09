@@ -27,29 +27,48 @@ OpenGLController::OpenGLController() : program(),
 			stars = glm::mat4(1.0f);
 		}
 
-#ifdef HAS_FTGL
-void OpenGLController::setupCameras(int c_w, int c_h, int tb_h) {
-	// update private variables for GPU rendering
+void OpenGLController::setCanvasDimensions(int c_w, int c_h) {
 	canvas_width = c_w;
 	canvas_height = c_h;
-	toolbar_height = tb_h;
-	float aspect_ratio = ((float)canvas_width) / ((float)canvas_height - (float)toolbar_height);
-	float tb_aspect_ratio = ((float)canvas_width) / ((float)toolbar_height);
-	// TODO: don't clobber our camera position on resize
-	tc = Camera(glm::vec3(0,0,100), glm::vec3(0,0,0), glm::vec3(0,1,0), 45.f, tb_aspect_ratio, 1.f, 1000.f);
-	c = Camera(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0), 45.f, aspect_ratio, 1.f, 1000.f);
-	f->FaceSize(toolbar_height);
 }
-#else
-void OpenGLController::setupCameras(int c_w, int c_h, int tb_h) {
-	// update private variables for GPU rendering
-	canvas_width = c_w;
-	canvas_height = c_h;
-	float aspect_ratio = ((float)canvas_width) / ((float)canvas_height);
 
-	// TODO: don't clobber our camera position on resize
-	// recalculate base camera matrix
-	c = Camera(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0), 45.f, aspect_ratio, 1.f, 1000.f);
+void OpenGLController::setupCameras() {
+	setupCanvasCamera();
+	#ifdef HAS_FTGL
+	setupToolbarCamera();
+	#endif
+}
+
+void OpenGLController::setupCanvasCamera() {
+	#ifdef HAS_FTGL
+	float aspect_ratio = ((float)canvas_width) / ((float)canvas_height - (float)toolbar_height);
+	#else
+	float aspect_ratio = ((float)canvas_width) / ((float)canvas_height);
+	#endif
+
+	if (!c_camera_initialized) {
+		c_camera_initialized = true;
+		c = Camera(glm::vec3(0,0,5), glm::vec3(0,0,0), glm::vec3(0,1,0), 45.f, aspect_ratio, 1.f, 1000.f);
+	} else {
+		c.setViewVolume(45.f, aspect_ratio, 1.f, 1000.f);
+	}
+}
+
+#ifdef HAS_FTGL
+void OpenGLController::setToolbarHeight(int tb_h) {
+	toolbar_height = tb_h;
+}
+
+void OpenGLController::setupToolbarCamera() {
+	float tb_aspect_ratio = ((float)canvas_width) / ((float)toolbar_height);
+
+	if (!tb_camera_initialized) {
+		tb_camera_initialized = true;
+		tc = Camera(glm::vec3(0,0,100), glm::vec3(0,0,0), glm::vec3(0,1,0), 45.f, tb_aspect_ratio, 1.f, 1000.f);
+	} else {
+		tc.setViewVolume(45.f, tb_aspect_ratio, 1.f, 1000.f);
+	}
+	f->FaceSize(toolbar_height);
 }
 #endif
 

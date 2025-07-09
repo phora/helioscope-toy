@@ -11,6 +11,15 @@
 #include "OpenGLController.h"
 
 
+void framebufferResizeEvent(GLFWwindow * window, int width, int height) {
+	OpenGLController *controller = (OpenGLController *)glfwGetWindowUserPointer(window);
+	glViewport(0, 0, width, height);
+	(*controller).setCanvasDimensions(width, height);
+	(*controller).setupCameras();
+
+	printf("I was resized to %dx%d!\n", width, height);
+}
+
 
 void keyEvent(GLFWwindow * window, int key, int scancode, int state, int mods ) {
 	OpenGLController *controller = (OpenGLController *)glfwGetWindowUserPointer(window);
@@ -53,7 +62,7 @@ int main( void )
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2 );
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_FALSE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
 	// Color information that used to be fed into the window creation
 	glfwWindowHint(GLFW_RED_BITS, 8);
@@ -83,14 +92,15 @@ int main( void )
 
 	glfwSetWindowUserPointer(window, (void *)&controller);
 	glfwSetKeyCallback(window, keyEvent);
+	glfwSetFramebufferSizeCallback(window, framebufferResizeEvent);
 
 	controller.init();
 
 	#ifdef HAS_FTGL
-	controller.setupCameras(WINDOW_WIDTH, WINDOW_HEIGHT, TB_HEIGHT);
-	#else
-	controller.setupCameras(WINDOW_WIDTH, WINDOW_HEIGHT);
+	controller.setToolbarHeight(TB_HEIGHT);
 	#endif
+	controller.setCanvasDimensions(WINDOW_WIDTH, WINDOW_HEIGHT);
+	controller.setupCameras();
 
 	// Enter the main loop
 	mainLoop(controller, window);

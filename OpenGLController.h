@@ -69,10 +69,12 @@ public:
 
 	void keyEvent(GLFWwindow *, int, int, int, int);
 	void update( GLFWwindow *, float ntime );
+	void setCanvasDimensions(int, int);
+	void setupCameras();
+	void setupCanvasCamera();
 	#ifdef HAS_FTGL
-	void setupCameras(int, int, int);
-	#else
-	void setupCameras(int, int);
+	void setToolbarHeight(int);
+	void setupToolbarCamera();
 	#endif
 
 private:
@@ -96,7 +98,9 @@ private:
 	std::vector<Planet> planetarium;
 	int canvas_width;
 	int canvas_height;
+	bool c_camera_initialized = false;
 	#ifdef HAS_FTGL
+	bool tb_camera_initialized = false;
 	int toolbar_height;
 	#endif
 
