@@ -405,7 +405,7 @@ void OpenGLController::draw() {
 		Planet p = planetarium[i];
 
 		if (!doMoon && p.getBodyNum() == SE_MOON) continue;
-		mat4 m;
+		mat4 m(1.0f);
 		m = glm::translate(m,vec3(i,0,0));
 		m = p.adjustOrbit(curtime, aroundSun)*m;
 		sphere.setModelTransform(m);

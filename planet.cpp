@@ -41,7 +41,7 @@ glm::mat4 Planet::adjustOrbit(double utctime, bool aroundSun)
 	}
 	swe_calc_ut(utctime, body_num, flags, v, serr);
 
-	glm::mat4 nmm;
+	glm::mat4 nmm(1.0f);
 	//nmm = glm::scale(nmm, glm::vec3(radius*rscale, pradius*rscale, radius*rscale));
 	//nmm = glm::translate(nmm, glm::vec3(v[0]/*dscale*/,v[1]/*dscale*/,v[2]/*dscale*/));
 	//nmm = glm::translate(nmm, glm::vec3(v[0]/*dscale*/,v[1]/*dscale*/,v[2]/*dscale*/));
