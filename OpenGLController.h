@@ -67,7 +67,7 @@ public:
 	 */
 	void draw();
 
-	void keyEvent(GLFWwindow *, int, int, int);
+	void keyEvent(GLFWwindow *, int, int, int, int);
 	void update( GLFWwindow *, float ntime );
 	#ifdef HAS_FTGL
 	void setupCameras(int, int, int);
