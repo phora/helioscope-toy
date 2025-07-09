@@ -39,7 +39,7 @@ OpenGLController::OpenGLController() : program(),
 			stars = glm::mat4(1.0f);
 		}
 
-void OpenGLController::keyEvent(GLFWwindow * window, int key, int state, int mods) {
+void OpenGLController::keyEvent(GLFWwindow * window, int key, int scancode, int state, int mods) {
 
 	if (state == GLFW_PRESS) {
 		//key combos in glfw are read right to left!

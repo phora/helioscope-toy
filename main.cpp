@@ -13,7 +13,7 @@
 OpenGLController controller;
 
 void keyEvent(GLFWwindow * window, int key, int scancode, int state, int mods ) {
-	controller.keyEvent(window, key, state, mods);
+	controller.keyEvent(window, key, scancode, state, mods);
 }
 
 void mainLoop(OpenGLController & controller, GLFWwindow * window)
