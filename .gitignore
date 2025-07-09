@@ -1,5 +1,6 @@
 *.o
 *.xcf
+*.exe
 helioscope-toy
 writeup.odt
 deps/lib/*.so
