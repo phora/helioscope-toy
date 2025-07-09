@@ -173,10 +173,19 @@ void OpenGLController::update(GLFWwindow *window,  float ntime ) {
 	float angle = /*rotationSpeed*/3 * deltaT;
 	//printf("Panning by %.6f,%.6f,%.6f\n",deltaT*pn.x,deltaT*pn.y,deltaT*pn.z);
 	c.pan(deltaT*pn.x,deltaT*pn.y,deltaT*pn.z);
+
+	bool stillHeld = (
+		(glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) ||
+		(glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) ||
+		(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) ||
+		(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	);
 	
-	pn.x=0;
-	pn.y=0;
-	pn.z=0;
+	if (!stillHeld) {
+		pn.x=0;
+		pn.y=0;
+		pn.z=0;
+	}
 
 	tPrev = ntime;
 	if (!pause) {
