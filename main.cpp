@@ -53,7 +53,9 @@ int main( void )
 	OpenGLController controller;
 	int WINDOW_WIDTH = 640;
 	int WINDOW_HEIGHT = 480;
+	#ifdef HAS_FTGL
 	int TB_HEIGHT = 48;
+	#endif
 	// Initialize GLFW
 	if( !glfwInit() ) exit( EXIT_FAILURE );
 	//glfwEnable(GLFW_STICKY_KEYS); //key combo?
