@@ -45,7 +45,7 @@ glm::mat4 Planet::adjustOrbit(double utctime, bool aroundSun)
 	//nmm = glm::scale(nmm, glm::vec3(radius*rscale, pradius*rscale, radius*rscale));
 	//nmm = glm::translate(nmm, glm::vec3(v[0]/*dscale*/,v[1]/*dscale*/,v[2]/*dscale*/));
 	//nmm = glm::translate(nmm, glm::vec3(v[0]/*dscale*/,v[1]/*dscale*/,v[2]/*dscale*/));
-	nmm = glm::rotate(nmm, (float)v[0], glm::vec3(0,0,1));
+	nmm = glm::rotate(nmm, glm::radians((float)v[0]), glm::vec3(0,0,1));
 	//printf("Velocities in AU: %E,%E,%E\n",v[3],v[4],v[5]);
 	return nmm;
 }
