@@ -4,6 +4,8 @@
 #include <GL/glu.h>
 #include <GLFW/glfw3.h>
 
+#include <swisseph/swephexp.h>
+
 #include <cstdlib>
 #include <cstdio>
 
@@ -93,6 +95,7 @@ int main( void )
 	glfwSetWindowUserPointer(window, (void *)&controller);
 	glfwSetKeyCallback(window, keyEvent);
 	glfwSetFramebufferSizeCallback(window, framebufferResizeEvent);
+	swe_set_ephe_path(NULL);
 
 	controller.init();
 
@@ -107,6 +110,7 @@ int main( void )
 
 	// Close window and terminate GLFW
 	glfwTerminate();
+	swe_close();
 	// Exit program
 	exit( EXIT_SUCCESS );
 
