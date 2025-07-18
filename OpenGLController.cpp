@@ -408,6 +408,7 @@ void OpenGLController::draw() {
 		ftp = f->Render(s.substr(i,1).c_str(),-1,ftp);
 	}
 	program.setUniform("ambientLightIntensity", vec3(0,0,0));
+	glViewport(0, toolbar_height, canvas_width, canvas_height);
 #else
 	printf("\r");
 	printf("%.2d/%.2d/%.4d - %.2d:%.2d:%.2d (%c)",
@@ -415,9 +416,7 @@ void OpenGLController::draw() {
 			hour,minu,sec, indicator);
 #endif
 //text code
-	#ifdef HAS_FTGL
-	glViewport(0, toolbar_height, canvas_width, canvas_height);
-	#endif
+
 	program.setUniform("projection",c.getProjectionMatrix());
 	program.setUniform("view",c.getViewMatrix());
 	for(std::size_t i = 0;i < planetarium.size();i++)
