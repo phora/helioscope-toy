@@ -1,6 +1,10 @@
 #ifndef OPENGLCONTROLLER_H_
 #define OPENGLCONTROLLER_H_
 
+#include "imgui.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
+
 #include "gl_compat_3_2.h"
 #include <swisseph/swephexp.h>
 #ifdef HAS_FTGL
@@ -66,6 +70,7 @@ public:
 	 * of the main loop.
 	 */
 	void draw();
+	void drawGUI();
 
 	void keyEvent(GLFWwindow *, int, int, int, int);
 	void update( GLFWwindow *, float ntime );
@@ -111,6 +116,7 @@ private:
 	void setupTexture(int channel, const char *fname);
 	int  planetByModifier(GLFWwindow * window);
 	void adjustTimeByOrbit(int planet_number, bool forward);
+	void drawGUI_OrbiterAdjuster();
 };
 
 #endif /* OPENGLCONTROLLER_H_ */

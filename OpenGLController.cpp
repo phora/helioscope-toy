@@ -467,3 +467,57 @@ void OpenGLController::draw() {
 	sphere.draw(program);
 }
 
+void OpenGLController::drawGUI_OrbiterAdjuster() {
+	ImGui::BeginTable("planet_orbit_incrementer", 3);
+	ImGui::TableSetupColumn("Planet Name", ImGuiTableColumnFlags_WidthStretch, 4.0);
+	ImGui::TableSetupColumn("Adders", ImGuiTableColumnFlags_WidthFixed, -1.0);
+	ImGui::TableSetupColumn("Subbers", ImGuiTableColumnFlags_WidthFixed, -1.0);
+	
+	char planet_name[40];
+	int planet_ids[9] = {
+		SE_MERCURY, SE_VENUS,   SE_EARTH,
+		SE_MARS,    SE_JUPITER, SE_SATURN,
+		SE_URANUS,  SE_NEPTUNE, SE_PLUTO
+	};
+
+	for (int i = 0; i < 9; i++) {
+		bool clicked_go_back, clicked_go_forward;
+		std::string forward_id;
+		std::string backward_id;
+		swe_get_planet_name(planet_ids[i], planet_name);
+		forward_id = string(planet_name);
+		forward_id.resize(forward_id.size() + 3, '@');
+		forward_id.replace(forward_id.size() - 3, 3, "add");
+		backward_id = string(planet_name);
+		backward_id.resize(backward_id.size() + 3, '@');
+		forward_id.replace(backward_id.size() - 3, 3, "sub");
+
+		ImGui::TableNextRow();
+			(i == 0) ? ImGui::TableSetColumnIndex(0) : ImGui::TableNextColumn();
+			ImGui::PushItemWidth(-1);
+			ImGui::Text(planet_name);
+			ImGui::PopItemWidth();
+			ImGui::TableNextColumn();
+			clicked_go_back = ImGui::ArrowButton(forward_id.c_str(), ImGuiDir_Left);
+			ImGui::TableNextColumn();
+			clicked_go_forward = ImGui::ArrowButton(backward_id.c_str(), ImGuiDir_Right);
+
+			if (clicked_go_back) {
+				adjustTimeByOrbit(planet_ids[i], false);
+			} else if (clicked_go_forward) {
+				adjustTimeByOrbit(planet_ids[i], true);
+			}
+	}
+	ImGui::EndTable();
+}
+
+void OpenGLController::drawGUI() {
+	ImGui::Begin("Helioscope Toy Controls");
+	ImGui::Checkbox("Show the moon?", &doMoon);
+	ImGui::Checkbox("Heliocentric?", &aroundSun);
+	if (ImGui::Button(pause ? "Play##pause_play" : "Pause##pause_play")) {
+		pause = !pause;
+	}
+	drawGUI_OrbiterAdjuster();
+	ImGui::End();
+}

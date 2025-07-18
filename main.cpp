@@ -1,3 +1,7 @@
+#include "imgui.h"
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
+
 #include "gl_compat_3_2.h"
 
 #include <GL/gl.h>
@@ -30,12 +34,29 @@ void keyEvent(GLFWwindow * window, int key, int scancode, int state, int mods ) 
 
 void mainLoop(OpenGLController & controller, GLFWwindow * window)
 {
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO &io = ImGui::GetIO(); (void)io;
+	ImGui::StyleColorsDark();
+	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplOpenGL3_Init("#version 150");
 	// Main loop
 	int running = GL_TRUE;
 	while( running )
 	{
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+
+		// normal doodles
 		controller.update(window, glfwGetTime());
 		controller.draw();
+
+		// gui be here
+		controller.drawGUI();
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		// Swap front and back rendering buffers
 		glfwSwapBuffers(window);
@@ -45,6 +66,10 @@ void mainLoop(OpenGLController & controller, GLFWwindow * window)
 		running = !glfwGetKey(window, GLFW_KEY_ESCAPE ) &&
 				!glfwWindowShouldClose(window);
 	}
+
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
 }
 
 int main( void )

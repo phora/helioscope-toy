@@ -29,11 +29,12 @@ GLFW_DIR ?= /usr
 SWISS_DIR ?= /usr
 GLTW_DIR ?= $(HOME)/School/csce412/gltw
 GLM_DIR ?= $(HOME)/School/csce412/glm
+IMGUI_DIR ?= 3rd-party/imgui
 ifneq ($(strip $(HAS_FTGL)),)
   FTGL_DIR ?= /usr
   FT_DIR ?= /usr
 endif
-INCLUDES = -I$(GLFW_DIR)/include -I$(GLM_DIR) -I$(SWISS_DIR)/include -I$(FTGL_DIR)/include -I$(FT_DIR)/include/freetype2 -I$(FT_DIR)/include
+INCLUDES = -I$(GLFW_DIR)/include -I$(GLM_DIR) -I$(SWISS_DIR)/include -I$(FTGL_DIR)/include -I$(FT_DIR)/include/freetype2 -I$(FT_DIR)/include -I$(IMGUI_DIR)
 ifneq ($(strip $(REPL_ID)),)
   INCLUDES += -I$(GL_DEV_DIR)/include -I$(GLU_DEV_DIR)/include
 endif
@@ -45,6 +46,7 @@ CXXFLAGS+=-DHAS_FTGL=1
 endif
 
 # A list of object files that this Makefile should generate and link
+IMGUI_WANTS = $(IMGUI_DIR)/backends/imgui_impl_opengl3.cpp $(IMGUI_DIR)/backends/imgui_impl_glfw.cpp $(IMGUI_DIR)/*.cpp
 OBJS =		main.o gl_compat_3_2.o OpenGLController.o shape.o shaderprogram.o sphere.o ring.o planet.o camera.o bmpreader.o
 
 # Update LIBS below to point to the appropriate libraries for your system
@@ -71,7 +73,7 @@ endif
 TARGET =	helioscope-toy
 
 $(TARGET):	$(OBJS)
-	$(CXX) -o $(TARGET) $(OBJS) $(LIBS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS) $(IMGUI_WANTS) $(LIBS)
 
 all:	$(TARGET)
 
