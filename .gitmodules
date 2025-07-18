@@ -4,3 +4,7 @@
 [submodule "3rd-party/gltw"]
 	path = 3rd-party/gltw
 	url = https://github.com/daw42/gltw
+[submodule "3rd-party/imgui"]
+	path = 3rd-party/imgui
+	url = https://github.com/ocornut/imgui/
+	branch = docking

@@ -111,39 +111,39 @@ void OpenGLController::keyEvent(GLFWwindow * window, int key, int scancode, int 
 				case GLFW_KEY_KP_ADD:
 					if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS) {
 						printf("Mercury!\n");
-						curtime+=87.969;
+						curtime += PlanetConstants::Orbits::MERCURY;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS) {
 						printf("Venus!\n");
-						curtime+=224.698;
+						curtime += PlanetConstants::Orbits::VENUS;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_2) == GLFW_PRESS) { //reprogram this if geocentric
 						printf("Earth!\n");
-						curtime+=365.256363051;
+						curtime += PlanetConstants::Orbits::EARTH;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_3) == GLFW_PRESS) {
 						printf("Mars!\n");
-						curtime+=686.971;
+						curtime += PlanetConstants::Orbits::MARS;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_4) == GLFW_PRESS) {
 						printf("Jupiter!\n");
-						curtime+=4332.59;
+						curtime += PlanetConstants::Orbits::JUPITER;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_5) == GLFW_PRESS) {
 						printf("Saturn!\n");
-						curtime+=10759.22;
+						curtime += PlanetConstants::Orbits::SATURN;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_6) == GLFW_PRESS) {
 						printf("Uranus!\n");
-						curtime+=30799.095;
+						curtime += PlanetConstants::Orbits::URANUS;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_7) == GLFW_PRESS) {
 						printf("Neptune!\n");
-						curtime+=60190.03;
+						curtime += PlanetConstants::Orbits::NEPTUNE;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_8) == GLFW_PRESS) {
 						printf("Pluto!\n");
-						curtime+=89865.65;
+						curtime += PlanetConstants::Orbits::PLUTO;
 					}
 					else
 					{
@@ -153,39 +153,39 @@ void OpenGLController::keyEvent(GLFWwindow * window, int key, int scancode, int 
 				case GLFW_KEY_KP_SUBTRACT:
 					if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS) {
 						printf("Mercury!\n");
-						curtime-=87.969;
+						curtime -= PlanetConstants::Orbits::MERCURY;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS) {
 						printf("Venus!\n");
-						curtime-=224.698;
+						curtime -= PlanetConstants::Orbits::VENUS;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_2) == GLFW_PRESS) { //reprogram this if geocentric
 						printf("Earth!\n");
-						curtime-=365.256363051;
+						curtime -= PlanetConstants::Orbits::EARTH;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_3) == GLFW_PRESS) {
 						printf("Mars!\n");
-						curtime-=686.971;
+						curtime -= PlanetConstants::Orbits::MARS;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_4) == GLFW_PRESS) {
 						printf("Jupiter!\n");
-						curtime-=4332.59;
+						curtime -= PlanetConstants::Orbits::JUPITER;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_5) == GLFW_PRESS) {
 						printf("Saturn!\n");
-						curtime-=10759.22;
+						curtime -= PlanetConstants::Orbits::SATURN;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_6) == GLFW_PRESS) {
 						printf("Uranus!\n");
-						curtime-=30799.095;
+						curtime -= PlanetConstants::Orbits::URANUS;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_7) == GLFW_PRESS) {
 						printf("Neptune!\n");
-						curtime-=60190.03;
+						curtime -= PlanetConstants::Orbits::NEPTUNE;
 					}
 					else if (glfwGetKey(window, GLFW_KEY_KP_8) == GLFW_PRESS) {
 						printf("Pluto!\n");
-						curtime-=89865.65;
+						curtime -= PlanetConstants::Orbits::PLUTO;
 					}
 					else
 					{

@@ -29,6 +29,22 @@ namespace PLUGraphicsLib {
 			glm::vec3 getColor();
 			int getBodyNum();
 	};
+
+	namespace PlanetConstants {
+		namespace Orbits {
+			static const double MERCURY = 87.969;
+			static const double VENUS   = 224.698;
+			static const double EARTH   = 365.256363051;
+			static const double MARS    = 686.971;
+			static const double JUPITER = 4332.59;
+			static const double SATURN  = 10759.22;
+			static const double URANUS  = 30799.095;
+			static const double NEPTUNE = 60190.03;
+			static const double PLUTO   = 89865.65;
+		};
+	};
+
+
 };
 
 #endif
