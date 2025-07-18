@@ -109,6 +109,8 @@ private:
 	//void drawPlanet(Planet p);
 	void loadTextures();
 	void setupTexture(int channel, const char *fname);
+	int  planetByModifier(GLFWwindow * window);
+	void adjustTimeByOrbit(int planet_number, bool forward);
 };
 
 #endif /* OPENGLCONTROLLER_H_ */

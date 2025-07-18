@@ -73,8 +73,9 @@ void OpenGLController::setupToolbarCamera() {
 #endif
 
 void OpenGLController::keyEvent(GLFWwindow * window, int key, int scancode, int state, int mods) {
-
 	if (state == GLFW_PRESS) {
+		// TODO: this ID is mostly unused, save for forward/backward date operations
+		int planet_id = -1;
 		//key combos in glfw are read right to left!
 			switch (key) {
 				case GLFW_KEY_RIGHT:
@@ -109,41 +110,9 @@ void OpenGLController::keyEvent(GLFWwindow * window, int key, int scancode, int 
 					doMoon=!doMoon;
 					break;
 				case GLFW_KEY_KP_ADD:
-					if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS) {
-						printf("Mercury!\n");
-						curtime += PlanetConstants::Orbits::MERCURY;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS) {
-						printf("Venus!\n");
-						curtime += PlanetConstants::Orbits::VENUS;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_2) == GLFW_PRESS) { //reprogram this if geocentric
-						printf("Earth!\n");
-						curtime += PlanetConstants::Orbits::EARTH;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_3) == GLFW_PRESS) {
-						printf("Mars!\n");
-						curtime += PlanetConstants::Orbits::MARS;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_4) == GLFW_PRESS) {
-						printf("Jupiter!\n");
-						curtime += PlanetConstants::Orbits::JUPITER;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_5) == GLFW_PRESS) {
-						printf("Saturn!\n");
-						curtime += PlanetConstants::Orbits::SATURN;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_6) == GLFW_PRESS) {
-						printf("Uranus!\n");
-						curtime += PlanetConstants::Orbits::URANUS;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_7) == GLFW_PRESS) {
-						printf("Neptune!\n");
-						curtime += PlanetConstants::Orbits::NEPTUNE;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_8) == GLFW_PRESS) {
-						printf("Pluto!\n");
-						curtime += PlanetConstants::Orbits::PLUTO;
+					planet_id = planetByModifier(window);
+					if (planet_id != -1) {
+						adjustTimeByOrbit(planet_id, true);
 					}
 					else
 					{
@@ -151,41 +120,9 @@ void OpenGLController::keyEvent(GLFWwindow * window, int key, int scancode, int 
 					}
 					break;
 				case GLFW_KEY_KP_SUBTRACT:
-					if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS) {
-						printf("Mercury!\n");
-						curtime -= PlanetConstants::Orbits::MERCURY;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS) {
-						printf("Venus!\n");
-						curtime -= PlanetConstants::Orbits::VENUS;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_2) == GLFW_PRESS) { //reprogram this if geocentric
-						printf("Earth!\n");
-						curtime -= PlanetConstants::Orbits::EARTH;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_3) == GLFW_PRESS) {
-						printf("Mars!\n");
-						curtime -= PlanetConstants::Orbits::MARS;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_4) == GLFW_PRESS) {
-						printf("Jupiter!\n");
-						curtime -= PlanetConstants::Orbits::JUPITER;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_5) == GLFW_PRESS) {
-						printf("Saturn!\n");
-						curtime -= PlanetConstants::Orbits::SATURN;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_6) == GLFW_PRESS) {
-						printf("Uranus!\n");
-						curtime -= PlanetConstants::Orbits::URANUS;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_7) == GLFW_PRESS) {
-						printf("Neptune!\n");
-						curtime -= PlanetConstants::Orbits::NEPTUNE;
-					}
-					else if (glfwGetKey(window, GLFW_KEY_KP_8) == GLFW_PRESS) {
-						printf("Pluto!\n");
-						curtime -= PlanetConstants::Orbits::PLUTO;
+					planet_id = planetByModifier(window);
+					if (planet_id != -1) {
+						adjustTimeByOrbit(planet_id, false);
 					}
 					else
 					{
@@ -195,6 +132,66 @@ void OpenGLController::keyEvent(GLFWwindow * window, int key, int scancode, int 
 			}
 		}
 
+}
+
+int OpenGLController::planetByModifier(GLFWwindow * window) {
+	int result = -1;
+
+	if (glfwGetKey(window, GLFW_KEY_KP_0) == GLFW_PRESS) {
+		printf("Mercury!\n");
+		result = SE_MERCURY;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_KP_1) == GLFW_PRESS) {
+		printf("Venus!\n");
+		result = SE_VENUS;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_KP_2) == GLFW_PRESS) { //reprogram this if geocentric
+		printf("Earth!\n");
+		result = SE_EARTH;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_KP_3) == GLFW_PRESS) {
+		printf("Mars!\n");
+		result = SE_MARS;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_KP_4) == GLFW_PRESS) {
+		printf("Jupiter!\n");
+		result = SE_JUPITER;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_KP_5) == GLFW_PRESS) {
+		printf("Saturn!\n");
+		result = SE_SATURN;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_KP_6) == GLFW_PRESS) {
+		printf("Uranus!\n");
+		result = SE_URANUS;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_KP_7) == GLFW_PRESS) {
+		printf("Neptune!\n");
+		result = SE_NEPTUNE;
+	}
+	else if (glfwGetKey(window, GLFW_KEY_KP_8) == GLFW_PRESS) {
+		printf("Pluto!\n");
+		result = SE_PLUTO;
+	}
+
+	return result;
+}
+
+void OpenGLController::adjustTimeByOrbit(int planet_number, bool forward = true) {
+	double orbit_delta = 0.0;
+	switch (planet_number) {
+		case SE_MERCURY: orbit_delta = PlanetConstants::Orbits::MERCURY; break;
+		case SE_VENUS:   orbit_delta = PlanetConstants::Orbits::VENUS;   break;
+		case SE_EARTH:   orbit_delta = PlanetConstants::Orbits::EARTH;   break;
+		case SE_MARS:    orbit_delta = PlanetConstants::Orbits::MARS;    break;
+		case SE_JUPITER: orbit_delta = PlanetConstants::Orbits::JUPITER; break;
+		case SE_SATURN:  orbit_delta = PlanetConstants::Orbits::SATURN;  break;
+		case SE_URANUS:  orbit_delta = PlanetConstants::Orbits::URANUS;  break;
+		case SE_NEPTUNE: orbit_delta = PlanetConstants::Orbits::NEPTUNE; break;
+		case SE_PLUTO:   orbit_delta = PlanetConstants::Orbits::PLUTO;   break;
+		default: return;
+	}
+	curtime += forward ? orbit_delta : -orbit_delta;
 }
 
 void OpenGLController::update(GLFWwindow *window,  float ntime ) {
