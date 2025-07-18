@@ -377,6 +377,8 @@ void OpenGLController::draw() {
 
 	int year, month, day, hour, minu, sec;
 	double dhour, dminu;
+	char indicator = aroundSun ? 'S' : 'E';
+
 	swe_revjul(curtime,SE_GREG_CAL,&year,&month,&day,&dhour);
 	hour=(int)dhour;
 	dminu=((dhour-hour)*60);
@@ -395,12 +397,7 @@ void OpenGLController::draw() {
 	glm::mat4 m(1.0f);
 	m = glm::translate(m,vec3(2 * toolbar_height - canvas_height,0,0));
 
-	char buff[28], indicator;
-	if (aroundSun) {
-		indicator = 'S';
-	} else { 
-		indicator = 'E';
-	}
+	char buff[28];
 	snprintf(buff,27,"%.2d/%.2d/%+.4d - %.2d:%.2d:%.2d (%c)",
 			month,day,year,
 			hour,minu,sec, indicator);
@@ -412,12 +409,6 @@ void OpenGLController::draw() {
 	}
 	program.setUniform("ambientLightIntensity", vec3(0,0,0));
 #else
-	char indicator;
-	if (aroundSun) {
-		indicator = 'S';
-	} else { 
-		indicator = 'E';
-	}
 	printf("\r");
 	printf("%.2d/%.2d/%.4d - %.2d:%.2d:%.2d (%c)",
 		month,day,year,
