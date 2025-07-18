@@ -512,12 +512,14 @@ void OpenGLController::drawGUI_OrbiterAdjuster() {
 }
 
 void OpenGLController::drawGUI() {
-	ImGui::Begin("Helioscope Toy Controls");
-	ImGui::Checkbox("Show the moon?", &doMoon);
-	ImGui::Checkbox("Heliocentric?", &aroundSun);
-	if (ImGui::Button(pause ? "Play##pause_play" : "Pause##pause_play")) {
-		pause = !pause;
+	bool window_open = ImGui::Begin("Helioscope Toy Controls");
+	if (window_open) {
+		ImGui::Checkbox("Show the moon?", &doMoon);
+		ImGui::Checkbox("Heliocentric?", &aroundSun);
+		if (ImGui::Button(pause ? "Play##pause_play" : "Pause##pause_play")) {
+			pause = !pause;
+		}
+		drawGUI_OrbiterAdjuster();
 	}
-	drawGUI_OrbiterAdjuster();
 	ImGui::End();
 }
