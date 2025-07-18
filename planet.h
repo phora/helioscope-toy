@@ -14,6 +14,8 @@ namespace PLUGraphicsLib {
 			float pradius; //polar radius
 			glm::vec3 color;
 			int body_num;
+			float heliocentric_orbit_distance;
+			float geocentric_orbit_distance;
 			/*
 			glm::vec3 spinAxes;
 			float dayPeriod;
@@ -22,11 +24,12 @@ namespace PLUGraphicsLib {
 			//add fields for rings?
 			*/
 		public:
-			Planet(GLfloat r, int body_num, glm::vec3 color);
+			Planet(GLfloat r, int body_num, float hel_orb_dist, float geo_orb_dist, glm::vec3 color);
 			~Planet();
 			//instead should spit us out a glm::mat4
 			glm::mat4 adjustOrbit(double utctime, bool aroundSun);
 			glm::vec3 getColor();
+			float getOrbitDistance(bool aroundSun);
 			int getBodyNum();
 	};
 

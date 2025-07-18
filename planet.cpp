@@ -1,10 +1,12 @@
 #include "planet.h"
 namespace PLUGraphicsLib {
 
-Planet::Planet(GLfloat f, int body_num, glm::vec3 color):
+Planet::Planet(GLfloat f, int body_num, float hel_orb_dist, float geo_orb_dist, glm::vec3 color):
 	radius(f), pradius(f),
 	color(color.x, color.y, color.z),
-	body_num(body_num)//,
+	body_num(body_num), heliocentric_orbit_distance(hel_orb_dist), geocentric_orbit_distance(geo_orb_dist)
+	
+	//,
 	/*spinAxes(spinAxes),
 	dayPeriod(1.f),
 	orbitPeriod(365.25f),
@@ -14,6 +16,10 @@ Planet::Planet(GLfloat f, int body_num, glm::vec3 color):
 }
 
 Planet::~Planet() { }
+
+float Planet::getOrbitDistance(bool aroundSun) {
+	return aroundSun ? heliocentric_orbit_distance : geocentric_orbit_distance;
+}
 
 glm::mat4 Planet::adjustOrbit(double utctime, bool aroundSun)
 {

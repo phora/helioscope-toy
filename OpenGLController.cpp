@@ -270,17 +270,17 @@ void OpenGLController::init() {
 	sphere.initVertexArrayObject();
 	ring.initVertexArrayObject();
 	
-	planetarium.push_back(Planet(0.0046491,SE_SUN,glm::vec3(1,1,1)));
-	planetarium.push_back(Planet(1.63104766411E-5, SE_MERCURY, glm::vec3(0.75,0.75,0.75)));
-	planetarium.push_back(Planet(4.05699251711E-5, SE_VENUS, glm::vec3(1.f,0.66,0.f)));
-	planetarium.push_back(Planet(4.27096801464E-5, SE_EARTH, glm::vec3(0.239,0.f,0.714)));
-	planetarium.push_back(Planet(1.165974268E-5, SE_MOON, glm::vec3(0.75,0.75,0.75)));
-	planetarium.push_back(Planet(2.2764259518E-5,SE_MARS,glm::vec3(1,0,0)));
-	planetarium.push_back(Planet(4.78732804761E-4,SE_JUPITER,glm::vec3(.643,.545,.459)));
-	planetarium.push_back(Planet(4.0357230964E-4,SE_SATURN,glm::vec3(.784,.654,.533)));
-	planetarium.push_back(Planet(1.71137688347E-4,SE_URANUS,glm::vec3(.619,.765,.788)));
-	planetarium.push_back(Planet(1.65841688009E-4,SE_NEPTUNE,glm::vec3(.372,.592,.933)));
-	planetarium.push_back(Planet(7.68774242636E-4,SE_PLUTO,glm::vec3(.486,.498,.408)));
+	planetarium.push_back(Planet(0.0046491,        SE_SUN,     0.0,  1.0, glm::vec3(1,1,1)));
+	planetarium.push_back(Planet(1.63104766411E-5, SE_MERCURY, 1.0,  3.0, glm::vec3(0.75,0.75,0.75)));
+	planetarium.push_back(Planet(4.05699251711E-5, SE_VENUS,   2.0,  4.0, glm::vec3(1.f,0.66,0.f)));
+	planetarium.push_back(Planet(4.27096801464E-5, SE_EARTH,   3.0,  0.0, glm::vec3(0.239,0.f,0.714)));
+	planetarium.push_back(Planet(1.165974268E-5,   SE_MOON,    4.0,  2.0, glm::vec3(0.75,0.75,0.75)));
+	planetarium.push_back(Planet(2.2764259518E-5,  SE_MARS,    5.0,  5.0, glm::vec3(1,0,0)));
+	planetarium.push_back(Planet(4.78732804761E-4, SE_JUPITER, 6.0,  6.0, glm::vec3(.643,.545,.459)));
+	planetarium.push_back(Planet(4.0357230964E-4,  SE_SATURN,  7.0,  7.0, glm::vec3(.784,.654,.533)));
+	planetarium.push_back(Planet(1.71137688347E-4, SE_URANUS,  8.0,  8.0, glm::vec3(.619,.765,.788)));
+	planetarium.push_back(Planet(1.65841688009E-4, SE_NEPTUNE, 9.0,  9.0, glm::vec3(.372,.592,.933)));
+	planetarium.push_back(Planet(7.68774242636E-4, SE_PLUTO,  10.0, 10.0, glm::vec3(.486,.498,.408)));
 
 	// Set the lighting uniforms
 	program.setUniform("diffuseLightIntensity", glm::vec3(1,1,1));
@@ -424,10 +424,13 @@ void OpenGLController::draw() {
 		program.setUniform("tex1", (int)i);
 		//drawPlanet(planetarium[i]);
 		Planet p = planetarium[i];
+		int planet_id = p.getBodyNum();
 
-		if (!doMoon && p.getBodyNum() == SE_MOON) continue;
+		if (!doMoon && planet_id == SE_MOON) continue;
 		mat4 m(1.0f);
-		m = glm::translate(m,vec3(i,0,0));
+		vec3 offset(p.getOrbitDistance(aroundSun), 0.0, 0.0);
+
+		m = glm::translate(m, offset);
 		m = p.adjustOrbit(curtime, aroundSun)*m;
 		sphere.setModelTransform(m);
 		if (p.getBodyNum() == SE_SUN)
